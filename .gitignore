@@ -1,0 +1,12 @@
+# Python
+.venv/
+.env
+environment_variables/
+
+# Node.js
+Frontend/node_modules/
+
+# Ignore all "env" folders that might show up anywhere
+**/env/
+
+backend/load_data/chroma_db/
