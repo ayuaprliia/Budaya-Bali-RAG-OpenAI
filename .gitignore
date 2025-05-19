@@ -10,3 +10,8 @@ Frontend/node_modules/
 **/env/
 
 backend/load_data/chroma_db/
+
+.gitignore
+
+# Ignore all .DS_Store files that might show up anywhere    
+**/.DS_Store
