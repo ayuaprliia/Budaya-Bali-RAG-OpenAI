@@ -29,7 +29,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ submitHandler }) => {
         <form className="relative" onSubmit={handleSubmit}>
           <Textarea
             placeholder="Tanyakan Apapun Seputar Kebudayaan dan Pariwisata Bali..."
-            className="w-full rounded-lg bg-[#3B2F2F] placeholder-[#FAF3E0] pl-3 text-[#FAF3E0] h-24"
+            className="w-full rounded-3xl bg-[#56411c] placeholder-[#FAF3E0] pl-3 text-[#fbfbfb] h-24 resize-none overflow-hidden"
             value={inputValue}
             onChange={handleInputChange}
             onKeyDown={(e) => {

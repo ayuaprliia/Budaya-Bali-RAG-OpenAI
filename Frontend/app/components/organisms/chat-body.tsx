@@ -4,6 +4,7 @@ import { postChat } from "@/app/actions/post-chat";
 import React from "react";
 import ChatBubble from "../atoms/chat-bubble";
 import ChatInput from "../molecules/message-input";
+import ChatHeader from "./chat-header";
 
 type Source = {
   title: string;
@@ -45,21 +46,18 @@ const ChatBody = () => {
     });
   };
 
-  return (
-    <div className="w-full h-screen flex justify-center bg-[#fffcf3]">
-      <div className="w-full max-w-3xl flex flex-col justify-between h-full px-6 py-10 bg-[#fffcf3] rounded-xl">
-        <div className="flex flex-col overflow-y-auto gap-8 mb-4">
-          {chat.length === 0 && (
-            <div className="text-center mt-50">
-              <h1 className="text-[#56411c] text-3xl font-bold font-geist-sans mb-4">
-                Rahajeng Semeton ❀
-              </h1>
-              <p className="text-lg max-w-xl mx-auto">
-                Apa yang bisa saya bantu?
-              </p>
-            </div>
-          )}
+return (
+  <div className="flex flex-col h-screen bg-[#fffcf3]">
+    <ChatHeader />
 
+    <div className="flex-grow overflow-y-auto px-6 py-4 max-w-3xl w-full mx-auto">
+      {chat.length === 0 ? (
+        <div className="text-center mt-40 text-[#56411c]">
+          <h1 className="text-3xl font-bold font-geist-sans mb-4">Rahajeng Semeton ❀</h1>
+          <p className="text-lg max-w-xl mx-auto mb-10">Apa yang bisa saya bantu?</p>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-8">
           {chat.map((chat, index) => (
             <ChatBubble
               isUser={chat.role === "user"}
@@ -68,18 +66,17 @@ const ChatBody = () => {
               key={index}
             />
           ))}
-
-          {isPending && (
-            <ChatBubble message="Sedang membuat jawaban..." isUser={false} />
-          )}
+          {isPending && <ChatBubble message="Sedang menyiapkan jawaban..." isUser={false} />}
         </div>
-
-        <div>
-          <ChatInput submitHandler={handleSubmit} />
-        </div>
-      </div>
+      )}
     </div>
-  );
+
+    <div className="w-full max-w-3xl mx-auto px-6 py-4 bg-[#fffcf6] rounded-t-xl">
+      <ChatInput submitHandler={handleSubmit} />
+    </div>
+  </div>
+);
 };
+
 
 export default ChatBody;

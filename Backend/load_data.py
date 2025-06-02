@@ -34,8 +34,6 @@ def load_and_persist_chroma(documents: list[Document], persist_dir: Path):
     vectordb.persist()
     print("Data has been successfully loaded and saved to ChromaDB.")
 
-# execution block
-
 if CHROMA_COLLECTION_FILE.exists():
     print("ChromaDB already exists. Reloading is not necessary.")
 else:

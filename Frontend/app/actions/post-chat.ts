@@ -8,8 +8,6 @@ export const postChat = async (question: string) => {
       body: JSON.stringify({ question }),
     });
 
-    console.log("Response from API:", response);
-
     if (!response.ok) {
       return { success: false, message: "Failed to generate response" };
     }
@@ -20,12 +18,11 @@ export const postChat = async (question: string) => {
       success: true,
       message: "Success",
       data: {
-        content: data.answer,  
-        sources: data.sources, 
+        content: data.answer,
+        sources: Array.isArray(data.sources) && data.sources.length > 0 ? data.sources : undefined,
       },
     };
   } catch (error) {
-    console.error("Error in postChat:", error);
     return { success: false, message: "Error occurred while fetching response" };
   }
 };
