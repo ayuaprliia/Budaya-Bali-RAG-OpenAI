@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from rag_pipeline import query_rag
+from rag_pipeline import query_rag_multilang
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -19,7 +19,7 @@ class QueryInput(BaseModel):
 @app.post("/ask")
 def query_api(input: QueryInput):
     try:
-        response = query_rag(input.question)
+        response = query_rag_multilang(input.question)
         return response
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

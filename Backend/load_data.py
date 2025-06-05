@@ -18,7 +18,8 @@ def prepare_documents(data: list[dict]) -> list[Document]:
             page_content=item["Isi Lengkap"],
             metadata={
                 "title": item["Judul"],
-                "url": item["Link Artikel"]
+                "url": item["Link Artikel"],
+                "image": item.get("Link Gambar", "")
             }
         )
         for item in data

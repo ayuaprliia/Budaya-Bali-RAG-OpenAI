@@ -3,6 +3,7 @@ import React, { useState } from "react";
 type Source = {
   title: string;
   url: string;
+  image?: string;
 };
 
 type ChatBubbleProps = {
