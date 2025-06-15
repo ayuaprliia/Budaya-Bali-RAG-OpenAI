@@ -69,7 +69,18 @@ const ChatBody = () => {
 
                 {chat.role === "assistant" && chat.sources && chat.sources.length > 0 && (
                   <div className="flex flex-col gap-4">
-                    {chat.sources.map((src, imgIndex) =>
+
+                      <div key={chat.sources[0].title} className="w-full flex justify-start">
+                          <div className="w-fit max-w-xs rounded-xl overflow-hidden shadow-md border border-gray-300">
+                            <img
+                              src={chat.sources[0].image}
+                              alt={chat.sources[0].title}
+                              className="w-full h-auto object-cover"
+                            />
+                          </div>
+                        </div>
+
+                    {/* {chat.sources.map((src, imgIndex) =>
                       src.image ? (
                         <div key={imgIndex} className="w-full flex justify-start">
                           <div className="w-fit max-w-xs rounded-xl overflow-hidden shadow-md border border-gray-300">
@@ -81,7 +92,7 @@ const ChatBody = () => {
                           </div>
                         </div>
                       ) : null
-                    )}
+                    )} */}
                   </div>
                 )}
               </React.Fragment>

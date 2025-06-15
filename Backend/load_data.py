@@ -6,27 +6,36 @@ from langchain.docstore.document import Document
 
 DATA_FILE = Path("data/artikel_budaya_bali_inggris.json")
 CHROMA_DIR = Path("load_data/chroma_db")
-CHROMA_COLLECTION_FILE = CHROMA_DIR / "chroma-collections.parquet"
+MODEL_NAME = "all-MiniLM-L6-v2"
+
+def chroma_db_exists(chroma_dir: Path) -> bool:
+    return (chroma_dir / "chroma-collections.parquet").exists() and \
+           (chroma_dir / "chroma-embeddings.parquet").exists()
 
 def load_json_data(filepath: Path) -> list[dict]:
-    with filepath.open("r", encoding="utf-8") as file:
-        return json.load(file)
+    try:
+        with filepath.open("r", encoding="utf-8") as file:
+            return json.load(file)
+    except (json.JSONDecodeError, FileNotFoundError) as e:
+        print(f"Error loading JSON: {e}")
+        return []
 
 def prepare_documents(data: list[dict]) -> list[Document]:
-    return [
-        Document(
-            page_content=item["Isi Lengkap"],
-            metadata={
-                "title": item["Judul"],
-                "url": item["Link Artikel"],
-                "image": item.get("Link Gambar", "")
-            }
-        )
-        for item in data
-    ]
+    documents = []
+    for item in data:
+        if "Isi Lengkap" in item and "Judul" in item and "Link Artikel" in item:
+            documents.append(Document(
+                page_content=item["Isi Lengkap"],
+                metadata={
+                    "title": item["Judul"],
+                    "url": item["Link Artikel"],
+                    "image": item.get("Link Gambar", "")
+                }
+            ))
+    return documents
 
 def load_and_persist_chroma(documents: list[Document], persist_dir: Path):
-    embedding = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+    embedding = SentenceTransformerEmbeddings(model_name=MODEL_NAME)
     vectordb = Chroma.from_documents(
         documents,
         embedding=embedding,
@@ -35,7 +44,7 @@ def load_and_persist_chroma(documents: list[Document], persist_dir: Path):
     vectordb.persist()
     print("Data has been successfully loaded and saved to ChromaDB.")
 
-if CHROMA_COLLECTION_FILE.exists():
+if chroma_db_exists(CHROMA_DIR):
     print("ChromaDB already exists. Reloading is not necessary.")
 else:
     if not DATA_FILE.exists():

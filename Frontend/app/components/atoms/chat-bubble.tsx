@@ -35,9 +35,23 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ isUser, message, sources }) => 
               >
                 🌐 Sumber
               </button>
-
-              {showSources && (
+             {/* {showSources && (
                 <div className="mt-2 space-y-1">
+
+                   <a
+                      key={sources[0].title}
+                      href={sources[0].url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-xs text-[#4495fd] hover:text-[#56411c] underline truncate"
+                    >
+                      🔗 {sources[0].title}
+                    </a>
+                </div> */}
+
+               {showSources && (
+                <div className="mt-2 space-y-1">
+
                   {sources.map((src, idx) => (
                     <a
                       key={idx}
